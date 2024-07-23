@@ -7,7 +7,7 @@ from loader import df, pd
 def train_model(data):
     X = data.drop('diabetes', axis=1)
     y = data['diabetes']
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
     model = LogisticRegression(max_iter=200)
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
