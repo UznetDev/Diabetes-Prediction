@@ -72,6 +72,4 @@ def stream_data():
 
 
 
-
-
 st.write_stream(stream_data)
