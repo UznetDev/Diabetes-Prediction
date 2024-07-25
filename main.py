@@ -77,41 +77,40 @@ def stream_data():
     # eatures = ['pregnancies', 'diastolic', 'triceps', 'insulin', 'bmi', 'dpf', 'age']
     features = columns
 
-    if columns.count('glucose'):
-        columns.remove('glucose')
+    if features.count('glucose'):
+        features.remove('glucose')
 
-    st.write(features)
+    if features:
+        X = df[features]
+        y = df['glucose']
 
-    X = df[features]
-    y = df.glucose
+        scaler = MinMaxScaler()
+        X_scaled = scaler.fit_transform(X)
+        fig = go.Figure()
 
-    scaler = MinMaxScaler()
-    X_scaled = scaler.fit_transform(X)
-    fig = go.Figure()
+        for i, feature in enumerate(features):
+            X_feature = X_scaled[:, i].reshape(-1, 1)
+            X_train, X_test, y_train, y_test = train_test_split(X_feature, y, random_state=0)
+            
+            model = LinearRegression()
+            model.fit(X_train, y_train)
+            
+            x_range = np.linspace(X_feature.min(), X_feature.max(), 100)
+            y_range = model.predict(x_range.reshape(-1, 1))
+            
+            fig.add_trace(go.Scatter(x=X_train.squeeze(), y=y_train, name=f'Train {feature}', mode='markers', marker=dict(opacity=0.5)))
+            fig.add_trace(go.Scatter(x=X_test.squeeze(), y=y_test, name=f'Test {feature}', mode='markers', marker=dict(opacity=0.5)))
+            
+            fig.add_trace(go.Scatter(x=x_range, y=y_range, name=f'Regression {feature}', mode='lines'))
 
-    for i, feature in enumerate(features):
-        X_feature = X_scaled[:, i].reshape(-1, 1)
-        X_train, X_test, y_train, y_test = train_test_split(X_feature, y, random_state=0)
-        
-        model = LinearRegression()
-        model.fit(X_train, y_train)
-        
-        x_range = np.linspace(X_feature.min(), X_feature.max(), 100)
-        y_range = model.predict(x_range.reshape(-1, 1))
-        
-        fig.add_trace(go.Scatter(x=X_train.squeeze(), y=y_train, name=f'Train {feature}', mode='markers', marker=dict(opacity=0.5)))
-        fig.add_trace(go.Scatter(x=X_test.squeeze(), y=y_test, name=f'Test {feature}', mode='markers', marker=dict(opacity=0.5)))
-        
-        fig.add_trace(go.Scatter(x=x_range, y=y_range, name=f'Regression {feature}', mode='lines'))
-
-    fig.update_layout(
-        xaxis_title="Normalized Feature Value",
-        yaxis_title="Glucose",
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
-    )
+        fig.update_layout(
+            xaxis_title="Normalized Feature Value",
+            yaxis_title="Glucose",
+            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+        )
 
 
-    st.plotly_chart(fig)
+        st.plotly_chart(fig)
 
 
 st.write_stream(stream_data)
