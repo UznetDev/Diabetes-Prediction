@@ -70,6 +70,4 @@ def stream_data():
             time.sleep(0.02)
 
 
-
-
 st.write_stream(stream_data)
