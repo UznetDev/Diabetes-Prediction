@@ -79,20 +79,16 @@ def stream_data():
 
     if columns.count('glucose'):
         columns.remove('glucose')
-        
+
     st.write(features)
 
     X = df[features]
     y = df.glucose
 
-    # Normalizatsiya qilish
     scaler = MinMaxScaler()
     X_scaled = scaler.fit_transform(X)
-
-    # Grafikni tayyorlash
     fig = go.Figure()
 
-    # Har bir xususiyat uchun regression modelini yaratish va grafikni chizish
     for i, feature in enumerate(features):
         X_feature = X_scaled[:, i].reshape(-1, 1)
         X_train, X_test, y_train, y_test = train_test_split(X_feature, y, random_state=0)
@@ -103,15 +99,12 @@ def stream_data():
         x_range = np.linspace(X_feature.min(), X_feature.max(), 100)
         y_range = model.predict(x_range.reshape(-1, 1))
         
-        # Trening va test ma'lumotlari uchun nuqtalarni chizish
         fig.add_trace(go.Scatter(x=X_train.squeeze(), y=y_train, name=f'Train {feature}', mode='markers', marker=dict(opacity=0.5)))
         fig.add_trace(go.Scatter(x=X_test.squeeze(), y=y_test, name=f'Test {feature}', mode='markers', marker=dict(opacity=0.5)))
         
-        # Regression chizig'ini chizish
         fig.add_trace(go.Scatter(x=x_range, y=y_range, name=f'Regression {feature}', mode='lines'))
 
     fig.update_layout(
-        # title="Regression Plot of Various Features vs Glucose",
         xaxis_title="Normalized Feature Value",
         yaxis_title="Glucose",
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
