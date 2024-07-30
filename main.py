@@ -51,15 +51,15 @@ for column in columns:
                                                min_value=0, 
                                                max_value=int(df[column].max()), 
                                                value=int(df[column].mean()))
+if len(input_data) > 0:
+    model, accuracy = train_model(df)
+    prediction, probability = predict_diabetes(model, input_data, col)
 
 def stream_data():
-
-
-    model, accuracy = train_model(df)
     text = f"Model Accuracy: {accuracy * 100:.2f}%"
 
     if len(input_data) > 0:
-        prediction, probability = predict_diabetes(model, input_data, col)
+
         re = f'Diabetes' if prediction[0] == 1 else 'No Diabetes'
         text = f"\nPrediction: {re}\n"
         for word in text.split(" "):
@@ -69,6 +69,7 @@ def stream_data():
         for word in text.split(" "):
             yield word + " "
             time.sleep(0.05)
+        return 80
 
     else:
         text = "\nPlease select values for all features to make a prediction.\n"
@@ -76,9 +77,15 @@ def stream_data():
             yield word + " "
             time.sleep(0.02)
 
+if len(input_data) > 0:
+    cols = st.columns(2)
 
+    cols[0].write_stream(stream_data)
 
-st.write_stream(stream_data)
+    donut_chart_population = make_donut(round(probability[0][1] * 100, 2), 'Population raise')
+    cols[1].altair_chart(donut_chart_population)
+
+#---------------------------------------------------------------------------
 
 features = columns
 
