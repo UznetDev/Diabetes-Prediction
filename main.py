@@ -49,10 +49,11 @@ if len(input_data) > 0:
 
 def stream_data():
 
-    text = f"Model Accuracy: {accuracy * 100:.2f}%"
-
     if len(input_data) > 0:
-
+        text = f"Model Accuracy: {accuracy * 100:.2f}%\n\n"
+        for word in text.split(" "):
+            yield word + " "
+            time.sleep(0.05)
         text = f"\nPrediction: {is_diabetes}\n"
         for word in text.split(" "):
             yield word + " "
@@ -69,10 +70,10 @@ def stream_data():
             yield word + " "
             time.sleep(0.02)
 
-if len(input_data) > 0:
-    cols = st.columns(3)
+cols = st.columns(3)
 
-    cols[0].write_stream(stream_data)
+cols[0].write_stream(stream_data)
+if len(input_data) > 0:
 
     is_diabetes = f'<strong>Warning:</strong> ! Diabetes' if prediction[0] == 1 else 'No Diabetes'
     color = f'red' if prediction[0] == 1 else 'blue'
@@ -127,21 +128,21 @@ if features:
     )
 
     cols[0].plotly_chart(fig)
+if len(input_data) > 0:
+    fig = px.scatter_3d(df, x='insulin', y='dpf', z='glucose',
+                        color='glucose', title='3D Scatter Plot of Insulin, Glucose, and DPF')
 
-fig = px.scatter_3d(df, x='insulin', y='dpf', z='glucose',
-                    color='glucose', title='3D Scatter Plot of Insulin, Glucose, and DPF')
+    X = df[['insulin', 'dpf']]
+    y = df['glucose']
+    model = LinearRegression()
+    model.fit(X, y)
 
-X = df[['insulin', 'dpf']]
-y = df['glucose']
-model = LinearRegression()
-model.fit(X, y)
+    insulin_range = np.linspace(X['insulin'].min(), X['insulin'].max(), 50)
+    glucose_range = np.linspace(X['dpf'].min(), X['dpf'].max(), 50)
+    insulin_grid, glucose_grid = np.meshgrid(insulin_range, glucose_range)
+    dpf_pred = model.predict(np.c_[insulin_grid.ravel(), glucose_grid.ravel()]).reshape(insulin_grid.shape)
 
-insulin_range = np.linspace(X['insulin'].min(), X['insulin'].max(), 50)
-glucose_range = np.linspace(X['dpf'].min(), X['dpf'].max(), 50)
-insulin_grid, glucose_grid = np.meshgrid(insulin_range, glucose_range)
-dpf_pred = model.predict(np.c_[insulin_grid.ravel(), glucose_grid.ravel()]).reshape(insulin_grid.shape)
+    fig.add_trace(go.Surface(x=insulin_grid, y=glucose_grid, z=dpf_pred, colorscale='Viridis', opacity=0.5))
 
-fig.add_trace(go.Surface(x=insulin_grid, y=glucose_grid, z=dpf_pred, colorscale='Viridis', opacity=0.5))
-
-cols[1].write(fig)
+    cols[1].write(fig)
 
