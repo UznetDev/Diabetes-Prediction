@@ -1,21 +1,12 @@
-import streamlit as st
 import time
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
-from loader import df, col
+from loader import col
 from function import *
-from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
-import plotly.graph_objects as go
-import numpy as np
-from sklearn.linear_model import LinearRegression
-import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
 from sklearn.linear_model import LinearRegression
-from loader import df
 import streamlit as st
 
 
@@ -54,14 +45,15 @@ for column in columns:
 if len(input_data) > 0:
     model, accuracy = train_model(df)
     prediction, probability = predict_diabetes(model, input_data, col)
+    is_diabetes = f'Diabetes' if prediction[0] == 1 else 'No Diabetes'
 
 def stream_data():
+
     text = f"Model Accuracy: {accuracy * 100:.2f}%"
 
     if len(input_data) > 0:
 
-        re = f'Diabetes' if prediction[0] == 1 else 'No Diabetes'
-        text = f"\nPrediction: {re}\n"
+        text = f"\nPrediction: {is_diabetes}\n"
         for word in text.split(" "):
             yield word + " "
             time.sleep(0.05)
@@ -78,12 +70,23 @@ def stream_data():
             time.sleep(0.02)
 
 if len(input_data) > 0:
-    cols = st.columns(2)
+    cols = st.columns(3)
 
     cols[0].write_stream(stream_data)
 
+    is_diabetes = f'<strong>Warning:</strong> ! Diabetes' if prediction[0] == 1 else 'No Diabetes'
+    color = f'red' if prediction[0] == 1 else 'blue'
+
+    mrk = f"""
+    <div style="background-color: {color}; color: white; padding: 10px; border-radius: 5px;">
+        {is_diabetes}
+    </div>
+    """
+    cols[1].markdown(mrk,
+    unsafe_allow_html=True)
+
     donut_chart_population = make_donut(round(probability[0][1] * 100, 2), 'Population raise')
-    cols[1].altair_chart(donut_chart_population)
+    cols[2].altair_chart(donut_chart_population)
 
 #---------------------------------------------------------------------------
 
