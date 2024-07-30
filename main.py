@@ -40,7 +40,7 @@ input_data = {}
 for column in columns:
     input_data[column] = st.sidebar.slider(f'Select value for ( {column} )',
                                             min_value=0,
-                                            max_value=int(df[column].max()+df[column].max()),
+                                            max_value=int(df[column].max()+df[column].min()),
                                             value=int(df[column].mean()))
 if len(input_data) > 0:
     model, accuracy = train_model(df)
