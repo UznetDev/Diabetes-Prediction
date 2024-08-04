@@ -54,15 +54,15 @@ To set up this project locally, follow these steps:
 ## Technologies and Versions
 
 - **Python:** 3.8
-- **Flask:** 1.1.2 (for web framework)
+- **Plotly:** 5.23.0 (for visualization)
 - **Pandas:** 1.1.3 (for data manipulation)
 - **Scikit-learn:** 0.23.2 (for machine learning algorithms)
 
 Refer to the documentation for each of these technologies for more details:
 
 - [Python Documentation](https://docs.python.org/3.8/)
-- [Flask Documentation](https://flask.palletsprojects.com/en/1.1.x/)
 - [Pandas Documentation](https://pandas.pydata.org/pandas-docs/version/1.1.3/)
+- [Plotly Documentation](https://plotly.com/)\
 - [Scikit-learn Documentation](https://scikit-learn.org/0.23/)
 
 ## Project Structure
@@ -73,10 +73,8 @@ The project structure is organized as follows:
 Diabetes-Prediction/
 ├── app.py               # Main application file
 ├── requirements.txt     # Dependencies list
-├── static/              # Static files (CSS, JS, images)
-├── templates/           # HTML templates
-├── models/              # Trained machine learning models
-└── data/                # Dataset files
+├── loader.py            # load data
+├── function.py          # Function base
 ```
 
 ## Forking the Repository
