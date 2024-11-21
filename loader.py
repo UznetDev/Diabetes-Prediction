@@ -2,6 +2,9 @@ import pandas as pd
 import dill as pickle
 from PIL import Image
 from data.config import thresholds
+from function.transformers import FeatureEngineering, WoEEncoding, ColumnSelector
+
+
 from sklearn.metrics import (accuracy_score,
                              precision_score,
                              recall_score,
