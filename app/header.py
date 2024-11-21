@@ -9,8 +9,6 @@ def app():
     st.markdown(footer, 
                 unsafe_allow_html=True)
 
-    st.sidebar.header("Input Parameters")
-
 
     st.markdown(head, 
         unsafe_allow_html=True

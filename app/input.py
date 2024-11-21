@@ -3,6 +3,8 @@ import pandas as pd
 
 
 def app():
+    st.sidebar.header("Input Parameters")
+
     # Pregnancies
     pregnancies_value = st.sidebar.number_input(
         'Enter value for `Pregnancies`',
@@ -43,5 +45,7 @@ def app():
         max_value=100,
         value=25
     )
+
+    st.sidebar.markdown('---')
     return pd.DataFrame([[pregnancies_value, glucose_value, insulin_value, bmi_value, age_value]], 
                         columns=['Pregnancies', 'Glucose', 'Insulin','BMI','Age'])    
