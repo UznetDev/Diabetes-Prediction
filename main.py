@@ -1,10 +1,17 @@
 import time
-from loader import model
+from loader import model, X, y, summary_plot
 from function.function import *
 import shap
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn.inspection import permutation_importance
+import plotly.express as px
+from sklearn.metrics import (accuracy_score,
+                             precision_score,
+                             recall_score,
+                             f1_score,
+                             roc_auc_score)
 
 
 
@@ -193,9 +200,14 @@ st.components.v1.html(force_plot_html, height=400)
 cols = st.columns(5)
 color = 'blue'
 
+thresholds = 0.32
+y_score = model.predict_proba(X)[:, 1]
+y_pred = (y_score >= thresholds).astype(int)
+
 # Accuracy Score
+accuracy_result = round(accuracy_score(y, y_pred) * 100, 2)
 cols[0].markdown("**Accuracy Score**\n\nPercentage of correct predictions.")
-cols[0].altair_chart(make_donut(78.57, 
+cols[0].altair_chart(make_donut(accuracy_result, 
                                 'Accuracy Score:',
                                 input_color=color,
                                 R=140,
@@ -203,8 +215,9 @@ cols[0].altair_chart(make_donut(78.57,
                                 cornerRadius=10))
 
 # F1 Score
+f1_result = (f1_score(y, y_pred) * 100).round(2)
 cols[1].markdown("**F1 Score**\n\nBalance of Precision and Recall.")
-cols[1].altair_chart(make_donut(75.56, 
+cols[1].altair_chart(make_donut(f1_result, 
                                 'F1 Score',
                                 input_color=color,
                                 R=140,
@@ -212,8 +225,9 @@ cols[1].altair_chart(make_donut(75.56,
                                 cornerRadius=10))
 
 # Recall Score
+recall_result = (recall_score(y, y_pred) * 100).round(2)
 cols[2].markdown("**Recall Score**\n\nProportion of actual positives identified.")
-cols[2].altair_chart(make_donut(94.44, 
+cols[2].altair_chart(make_donut(recall_result, 
                                 'Recall Score',
                                 input_color=color,
                                 R=140,
@@ -221,8 +235,9 @@ cols[2].altair_chart(make_donut(94.44,
                                 cornerRadius=10))
 
 # Precision Score
+precision_result = (precision_score(y, y_pred) * 100).round(2)
 cols[3].markdown("**Precision Score**\n\nProportion of positive predictions that are correct.")
-cols[3].altair_chart(make_donut(62.96, 
+cols[3].altair_chart(make_donut(precision_result, 
                                 'Precision Score:',
                                 input_color=color,
                                 R=140,
@@ -230,10 +245,27 @@ cols[3].altair_chart(make_donut(62.96,
                                 cornerRadius=10))
 
 # ROC AUC Score
+roc_auc = (roc_auc_score(y, y_score)*100).round(2)
 cols[4].markdown("**ROC AUC Score**\n\nAbility to distinguish between classes.")
-cols[4].altair_chart(make_donut(83.67, 
+cols[4].altair_chart(make_donut(roc_auc,
                                 'ROC AUC Score:',
                                 input_color=color,
                                 R=140,
                                 innerRadius=40,
                                 cornerRadius=10))
+
+# perm_importance
+cols = st.columns(2)
+perm_importance = permutation_importance(model, X, model.predict(X), n_repeats=5, random_state=42)
+
+perm_importance_df = pd.DataFrame({
+    'Feature': X.columns,
+    'Importance': perm_importance.importances_mean
+}).sort_values(by='Importance', ascending=False)
+
+perm_importance_df = perm_importance_df.sort_values(by='Importance', ascending=False)
+fig = px.bar(perm_importance_df, y='Feature', x='Importance', orientation='h',
+             labels={'Importance': 'Permutation Importance', 'Feature': 'Feature'},
+             title='Permutation Importance of Features')
+fig.update_layout(yaxis=dict(autorange='reversed'))
+cols[0].plotly_chart(fig)
