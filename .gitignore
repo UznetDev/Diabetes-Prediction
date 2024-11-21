@@ -10,5 +10,5 @@ pages
 .idea
 .command/
 .command
-venv
 venv/
+venv
