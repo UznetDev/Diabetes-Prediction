@@ -1,0 +1,14 @@
+test*
+/env/
+test
+/__pycache__/
+__pycache__
+/pages/
+pages
+.idea/
+/.idea/
+.idea
+.command/
+.command
+venv
+venv/

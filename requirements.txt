@@ -1,0 +1,6 @@
+matplotlib==3.9.0
+pandas==2.2.0
+scikit-learn==1.5.1
+seaborn==0.13.2
+streamlit==1.36.0
+plotly==5.23.0
