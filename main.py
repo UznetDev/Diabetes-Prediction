@@ -1,5 +1,7 @@
 import time
-from loader import model, X, y, summary_plot
+from loader import model
+from data.config import X, y
+from data.base import head, st_style, footer, mrk
 from function.function import *
 import shap
 import streamlit as st
@@ -22,23 +24,17 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+st.markdown(st_style, 
+            unsafe_allow_html=True)
+
+
+st.markdown(footer, unsafe_allow_html=True)
+
 st.sidebar.header("Input Parameters")
 
 
-st.markdown(
-    """
-    <div style="text-align: 
-    center; 
-    font-size: 40px; 
-    font-weight: bold; 
-    color: #2E86C1;
-    margin-bottom: 20px;">
-        🌟 Diabetes Prediction App 🌟
-    </div>
-    <div style="text-align: center; font-size: 18px; color: #5D6D7E; margin-bottom: 60px;">
-        Harness the power of machine learning to predict diabetes and provide insights!
-    </div>
-    """, 
+
+st.markdown(head, 
     unsafe_allow_html=True
 )
 
@@ -113,19 +109,8 @@ cols[0].write_stream(stream_data)
 is_diabetes = f'<strong>Warning:</strong> Diabetes!' if prediction >= thresholds else 'No Diabetes'
 color = f'red' if prediction >= thresholds else 'blue'
 
-mrk = f"""
-<div style="background-color: {color}; 
-color: white; 
-margin-bottom: 50px;
-padding: 10px;
-max-width: 300px;
-text-align: center;
-border-radius: 5px; text-align: center;">
-    {is_diabetes}
-</div>
-"""
 
-cols[1].markdown(mrk, unsafe_allow_html=True)
+cols[1].markdown(mrk.format(is_diabetes, color), unsafe_allow_html=True)
 cols[1].write('\n\n\n\n\n')
 donut_chart_population = make_donut((prediction * 100).round(2)[0], 
                                     'Diabetes Risk',
@@ -155,20 +140,18 @@ def stream_data():
     for word in text.split(" "):
         yield word + " "
         time.sleep(0.05)
-    return 80
 
+# Layout with two columns
 cols = st.columns(2)
 
-cols[0].write_stream(stream_data)
+# Column 1: Stream user input
+with cols[0]:
+    st.markdown("### Input Streaming")
+    st.markdown("#### See your inputs in real-time below!")
+    for word in stream_data():
+        st.write(word)
 
-
-fig, ax = plt.subplots()
-
-values = shap_values_class_1
-base_value = explainer.expected_value[0]
-data = sample_transformed.iloc[0]
-
-
+# SHAP Waterfall Plot
 fig, ax = plt.subplots()
 shap.plots.waterfall(
     shap.Explanation(
@@ -183,9 +166,19 @@ fig.patch.set_alpha(0.3)
 ax.set_facecolor("#023047")
 ax.patch.set_alpha(0.5)
 
-cols[1].pyplot(fig)
+# Column 2: SHAP Waterfall Plot
+with cols[1]:
+    st.markdown("### SHAP Waterfall Plot")
+    st.markdown(
+        """
+        - 🟡 **Base Value**: Expected model prediction without considering input features.
+        - 🟡 **Feature Contributions**: Bars represent individual feature impact.
+        - 🟡 **Output Prediction**: Sum of base value and contributions gives final output.
+        """
+    )
+    st.pyplot(fig)
 
-
+# SHAP Force Plot
 force_plot_html = shap.force_plot(
     base_value=explainer.expected_value[1],
     shap_values=shap_values_single[0][:, 1],
@@ -193,9 +186,24 @@ force_plot_html = shap.force_plot(
     feature_names=sample_transformed.columns.tolist()
 )
 
+# Explanation column
+st.markdown(
+    """
+    ### Column Explanations
+    - 🟡 **Input Streaming**: Displays user inputs dynamically in real-time.
+    - 🟡 **SHAP Waterfall Plot**: Visualizes how each feature contributes to the model prediction.
+    - 🟡 **SHAP Force Plot**: Interactive plot showing positive/negative feature contributions.
+    \n\n\n\n""",
+    unsafe_allow_html=True,
+)
+
+# Add SHAP JS visualization
 force_plot_html = f"<head>{shap.getjs()}</head><body>{force_plot_html.html()}</body>"
+st.markdown("### SHAP Waterfall Plot")
 st.components.v1.html(force_plot_html, height=400)
 
+
+st.markdown("### Model performance")
 # Model score
 cols = st.columns(5)
 color = 'blue'
@@ -266,6 +274,6 @@ perm_importance_df = pd.DataFrame({
 perm_importance_df = perm_importance_df.sort_values(by='Importance', ascending=False)
 fig = px.bar(perm_importance_df, y='Feature', x='Importance', orientation='h',
              labels={'Importance': 'Permutation Importance', 'Feature': 'Feature'},
-             title='Permutation Importance of Features')
+             title='Permutation Importance of Features for model')
 fig.update_layout(yaxis=dict(autorange='reversed'))
 cols[0].plotly_chart(fig)
