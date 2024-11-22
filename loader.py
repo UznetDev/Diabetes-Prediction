@@ -1,8 +1,8 @@
 import pandas as pd
-import dill as pickle
+import joblib
 from PIL import Image
 from data.config import thresholds
-from function.transformers import FeatureEngineering, WoEEncoding, ColumnSelector
+
 
 
 from sklearn.metrics import (accuracy_score,
@@ -17,8 +17,7 @@ y = data['Outcome']
 
 
 
-with open('model.pkl', 'rb') as f:
-    model = pickle.load(f)
+model = joblib.load('model.pkl')
 
 
 

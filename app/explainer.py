@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 def app(input_data):
     sample_transformed = model.named_steps['feature_engineering'].transform(input_data)
-    explainer = shap.TreeExplainer(model.named_steps['random_forest'])
+    explainer = shap.TreeExplainer(model.named_steps['model'])
     shap_values_single = explainer.shap_values(sample_transformed)
 
     shap_values_class_1 = shap_values_single[0][:, 1]  
