@@ -1,7 +1,6 @@
 import streamlit as st
 import shap
 import time
-import pandas as pd
 from loader import model
 import matplotlib.pyplot as plt
 
