@@ -2,20 +2,19 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
-
 | Version | Supported          |
 | ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| 1.0.x   | :white_check_mark: |
 
-## Reporting a Vulnerability
+## Reporting to a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+*This project was created for experimental purposes only, the model we developed may make mistakes, and it has not been reviewed by medical professionals. It can only provide you with basic knowledge.  
+Please trust only specialists and take care of your health.*
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+## Model accurace
+
+`F1 Score:` *0.7556*
+`Accuracy Score:` *0.7857*
+`Recall Score:` *0.9444*
+`Precision Score:` *0.6296*
+`ROC AUC Score:` *0.8367*
