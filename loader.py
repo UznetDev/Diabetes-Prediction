@@ -1,6 +1,5 @@
 import pandas as pd
 import joblib
-from PIL import Image
 from data.config import thresholds
 
 
@@ -34,5 +33,3 @@ recall_result = (recall_score(y, y_pred) * 100).round(2)
 precision_result = (precision_score(y, y_pred) * 100).round(2)
 # ROC AUC Score
 roc_auc = (roc_auc_score(y, y_score)*100).round(2)
-
-summary_plot = Image.open('image/summary_plot.png')

@@ -33,4 +33,8 @@ app()
 from app.perm_importance import app
 app()
 
+# About
+from app.about import app
+app()
+
 st.warning('This project (model) was created for learning purposes; the model may make mistakes. Please trust only qualified experts.')
