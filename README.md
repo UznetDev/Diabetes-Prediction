@@ -47,15 +47,15 @@ The dataset contains the following details:
 - **Number of rows:** 768
 - **Number of columns:** 9
 - **Column names and data types:**
-  - `Pregnancies` (int64)
-  - `Glucose` (int64)
-  - `BloodPressure` (int64)
-  - `SkinThickness` (int64)
-  - `Insulin` (int64)
-  - `BMI` (float64)
-  - `DiabetesPedigreeFunction` (float64)
-  - `Age` (int64)
-  - `Outcome` (int64): Binary outcome (0 or 1)
+  - `Pregnancies` (int64): Number of times pregnant.
+  - `Glucose` (int64):  Plasma glucose concentration a 2 hours in an oral glucose tolerance test.
+  - `BloodPressure` (int64): Diastolic blood pressure (mm Hg).
+  - `SkinThickness` (int64): Triceps skin fold thickness (mm).
+  - `Insulin` (int64): 2-Hour serum insulin (mu U/ml).
+  - `BMI` (float64): Body mass index (weight in kg/(height in m)^2).
+  - `DiabetesPedigreeFunction` (float64): Diabetes pedigree function.
+  - `Age` (int64): Age (years).
+  - `Outcome` (int64): Class variable (0 or 1).
 
 ### Sample Data (First 5 Rows)
 | Pregnancies | Glucose | BloodPressure | SkinThickness | Insulin |  BMI  | DiabetesPedigreeFunction | Age | Outcome |
