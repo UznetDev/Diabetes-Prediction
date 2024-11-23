@@ -11,15 +11,16 @@ Check out the live application: [Diabetes Prediction App](https://diabetes-predi
 ## Table of Contents
 1. [Overview](#overview)
 2. [Dataset](#dataset)
-3. [Features](#features)
-4. [Installation](#installation)
-5. [How It Works](#how-it-works)
-6. [Project Structure](#project-structure)
-7. [Explanation Methods](#explanation-methods)
-8. [Model Performance](#model-performance)
-9. [Project Motivation](#project-motivation)
-10. [Contributing](#contributing)
-11. [License](#license)
+3. [Model](#model)
+4. [Features](#features)
+5. [Installation](#installation)
+6. [How It Works](#how-it-works)
+7. [Project Structure](#project-structure)
+8. [Explanation Methods](#explanation-methods)
+9. [Model Performance](#model-performance)
+10. [Project Motivation](#project-motivation)
+11. [Contributing](#contributing)
+12. [License](#license)
 
 ---
 
@@ -80,6 +81,32 @@ The dataset contains the following details:
 
 #### We use only `Pregnancies`, `Glucose`, `BMI`, `Insulin`, `Age` for prediction.
 ---
+
+## Model
+You can learn more about the model in detail from 'notebooks/Model.ipynb'. The `RandomForestClassifier` model was chosen through experimentation and showed the best performance. The required hyperparameters were identified using the `optuna` optimizer. For the model to function, it needs `FeatureEngineering`, `WoEEncoding`, and `ColumnSelector` transformers, which are combined through a pipeline.
+
+### **1. FeatureEngineering**
+- **What It Does**: Transforms raw data into a format suitable for machine learning. This includes scaling, encoding, creating new features, or handling missing data.
+- **How It Works**: Applies preprocessing techniques (e.g., standardization, encoding) to enhance feature quality.
+- **Why We Need It**: Improves model performance by making data easier to interpret for algorithms.
+
+---
+
+### **2. WoEEncoding (Weight of Evidence Encoding)**
+- **What It Does**: Encodes categorical variables into numerical values based on their relationship with the target variable in binary classification.
+- **How It Works**: Calculates Weight of Evidence (WoE) values for each category using:
+  \[
+  WoE = \ln\left(\frac{P(Feature|Positive)}{P(Feature|Negative)}\right)
+  \]
+- **Why We Need It**: Enhances interpretability and reduces the risk of overfitting for categorical features.
+
+---
+
+### **3. ColumnSelector**
+- **What It Does**: Selects specific columns (e.g., numerical, categorical) from the dataset for targeted processing.
+- **How It Works**: Filters columns based on provided criteria (e.g., data type, column names).
+- **Why We Need It**: Enables flexible and modular preprocessing in machine learning pipelines.
+
 
 ## Features
 
