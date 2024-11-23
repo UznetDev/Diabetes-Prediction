@@ -86,12 +86,12 @@ The dataset contains the following details:
 You can learn more about the model in detail from [here]('notebooks/Model.ipynb). The `RandomForestClassifier` model was chosen through experimentation and showed the best performance. The required hyperparameters were identified using the `optuna` optimizer. For the model to function, it needs `FeatureEngineering`, `WoEEncoding`, and `ColumnSelector` transformers, which are combined through a pipeline.
 `Cross-validation` and `ROC AUC` were used for model selection because the number of observations was small, and splitting into test/train sets would have been inaccurate.
 
-### **1. FeatureEngineering**
+### About tarnsformers. 
+#### **1. FeatureEngineering**
 Transforms raw data into a format suitable for machine learning. This includes scaling, encoding, creating new features, or handling missing data.
 
----
 
-### **2. WoEEncoding (Weight of Evidence Encoding)**
+#### **2. WoEEncoding (Weight of Evidence Encoding)**
 
 The Weight of Evidence (WoE) for a category in a feature is calculated as:
 
@@ -100,19 +100,17 @@ Where:
 - `P(Feature = X | Target = 1)`: Proportion of positive cases (`Target = 1`) for the category `X`.
 - `P(Feature = X | Target = 0)`: Proportion of negative cases (`Target = 0`) for the category `X`.
 
-### Example:
+##### Example:
 If a feature `X` has the following counts:
 - For `Target = 1` (Positive): `N1`
 - For `Target = 0` (Negative): `N0`
 
----
-
-### **3. ColumnSelector**
+#### **3. ColumnSelector**
 Selects specific columns *Pregnancies*, *Glucose*, *BMI*, *PregnancyRatio*,
     *RiskScore*, *InsulinEfficiency*, *Glucose_BMI*, *BMI_Age*,
     *Glucose_woe*, *RiskScore_woe* after `FeatureEngineering`, it helps remove nice columns.
 
-
+---
 ## Features
 
 1. **Interactive Input**: Enter health parameters (Pregnancies, Glucose, Insulin, BMI, Age).
