@@ -220,11 +220,11 @@ Diabetes-Prediction/
 ## Model Performance
 
 Performance metrics calculated:
-- **Accuracy**: Percentage of correct predictions.
-- **Precision**: Ratio of true positives to total positive predictions.
-- **Recall**: Ratio of true positives to total actual positives.
-- **F1 Score**: Harmonic mean of Precision and Recall.
-- **ROC AUC**: Area under the ROC curve.
+- **Accuracy**: Percentage of correct predictions. (0.7857)
+- **Precision**: Ratio of true positives to total positive predictions. (0.6296)
+- **Recall**: Ratio of true positives to total actual positives. (0.9444)
+- **F1 Score**: Harmonic mean of Precision and Recall. (0.7556)
+- **ROC AUC**: Area under the ROC curve. (0.8367)
 
 Metrics are displayed as donut charts in the application.
 
