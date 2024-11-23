@@ -77,11 +77,8 @@ The dataset contains the following details:
 - **Age:** Mean = 33.24, Max = 81
 - **Outcome:** Proportion of `1` (positive diabetes) = 34.9%
 
-### Observations
-- Several columns have a minimum value of `0`, which may indicate missing data.
-- The dataset is related to predicting diabetes (`Outcome`).
 
-We use only `Pregnancies`, `Glucose`, `BMI`, `Insulin`, `Age` for prediction.
+#### We use only `Pregnancies`, `Glucose`, `BMI`, `Insulin`, `Age` for prediction.
 ---
 
 ## Features
