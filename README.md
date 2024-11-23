@@ -92,9 +92,8 @@ Transforms raw data into a format suitable for machine learning. This includes s
 
 
 #### **2. WoEEncoding (Weight of Evidence Encoding)**
-
+Features must help to better explain the `Outcome` after WoE.
 The Weight of Evidence (WoE) for a category in a feature is calculated as:
-
 
 Where:
 - `P(Feature = X | Target = 1)`: Proportion of positive cases (`Target = 1`) for the category `X`.
@@ -108,7 +107,7 @@ If a feature `X` has the following counts:
 #### **3. ColumnSelector**
 Selects specific columns *Pregnancies*, *Glucose*, *BMI*, *PregnancyRatio*,
     *RiskScore*, *InsulinEfficiency*, *Glucose_BMI*, *BMI_Age*,
-    *Glucose_woe*, *RiskScore_woe* after `FeatureEngineering`, it helps remove nice columns.
+    *Glucose_woe*, *RiskScore_woe* after `FeatureEngineering`, it helps remove noice columns.
 
 ---
 ## Features
