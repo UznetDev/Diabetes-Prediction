@@ -1,140 +1,173 @@
-# Diabetes Prediction
+# Diabetes Prediction with AI
 
-This repository contains a project for predicting diabetes using machine learning algorithms. The goal is to build a predictive model that can help in early diagnosis and treatment planning for diabetes patients.
+This project demonstrates a machine learning solution for predicting diabetes based on user-provided health data. The application uses **Streamlit** for an interactive web interface and advanced interpretability tools like SHAP and permutation importance to explain model predictions.
+
+## Live Demo
+
+Check out the live application: [Diabetes Prediction App](https://diabetes-prediction-uz.streamlit.app/)
+
+---
 
 ## Table of Contents
+1. [Overview](#overview)
+2. [Dataset](#dataset)
+3. [Features](#features)
+4. [Installation](#installation)
+5. [How It Works](#how-it-works)
+6. [Explanation Methods](#explanation-methods)
+7. [Model Performance](#model-performance)
+8. [Project Motivation](#project-motivation)
+9. [Contributing](#contributing)
+10. [License](#license)
 
-- [Objective](#objective)
-- [Installation and Setup](#installation-and-setup)
-- [Technologies and Versions](#technologies-and-versions)
-- [Project Structure](#project-structure)
-- [Forking the Repository](#forking-the-repository)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+---
 
-## Objective
+## Overview
 
-The primary objective of this project is to develop a machine learning model that can accurately predict whether a person has diabetes based on specific medical attributes. The project aims to:
+The **Diabetes Prediction with AI** project leverages a machine learning model to predict diabetes risk. Built with **Streamlit**, the app explains predictions using SHAP and permutation importance while showcasing model performance metrics.
 
-- Utilize various machine learning algorithms for prediction.
-- Compare the performance of different models.
-- Provide a user-friendly interface for predictions.
+### Why This Project?
 
-## Installation and Setup
+Understanding diabetes risk through data-driven predictions can help identify potential cases early. This project also demonstrates:
+- Practical application of machine learning.
+- Model interpretability through SHAP and permutation importance.
+- Real-world deployment of machine learning models.
 
-To set up this project locally, follow these steps:
+---
 
-1. **Clone the Repository:**
+## Dataset
 
-    ```bash
-    git clone https://github.com/UznetDev/Diabetes-Prediction.git
-    cd Diabetes-Prediction
-    ```
+The dataset is sourced from the **National Institute of Diabetes and Digestive and Kidney Diseases**. It includes:
+- **Pregnancies**
+- **Glucose Levels**
+- **Insulin Levels**
+- **BMI (Body Mass Index)**
+- **Age**
+- **Outcome**: Indicates diabetes presence (1 = Diabetes, 0 = No Diabetes).
 
-2. **Create and Activate a Virtual Environment:**
+---
 
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-    ```
+## Features
 
-3. **Install Dependencies:**
+1. **Interactive Input**: Enter health parameters (Pregnancies, Glucose, Insulin, BMI, Age).
+2. **Diabetes Prediction**: Real-time risk prediction with probability.
+3. **SHAP Explanations**: Visualize individual prediction explanations using:
+   - Waterfall Plot
+   - Force Plot
+4. **Permutation Importance**: Analyze which features most influence the predictions.
+5. **Performance Metrics**:
+   - Accuracy
+   - Precision
+   - Recall
+   - F1 Score
+   - ROC AUC
+6. **Informational Section**: Learn about diabetes risk factors in the "About" section.
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+---
 
-4. **Run the Application:**
+## Installation
 
-    ```bash
-    python app.py
-    ```
+### Prerequisites
+- Python 3.8 or above
+- Pip package manager
 
-## Technologies and Versions
+### Steps
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/UznetDev/Diabetes-Prediction.git
+   cd Diabetes-Prediction
+   ```
 
-- **Python:** 3.8
-- **Plotly:** 5.23.0 (for visualization)
-- **Pandas:** 1.1.3 (for data manipulation)
-- **Scikit-learn:** 0.23.2 (for machine learning algorithms)
+2. Install required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Refer to the documentation for each of these technologies for more details:
+3. Run the application locally:
+   ```bash
+   streamlit run main.py
+   ```
 
-- [Python Documentation](https://docs.python.org/3.8/)
-- [Pandas Documentation](https://pandas.pydata.org/pandas-docs/version/1.1.3/)
-- [Plotly Documentation](https://plotly.com/)\
-- [Scikit-learn Documentation](https://scikit-learn.org/0.23/)
+---
 
-## Project Structure
+## How It Works
 
-The project structure is organized as follows:
+### Application Workflow
+1. **User Input**:
+   - Enter health data in the sidebar.
+   - Features: Pregnancies, Glucose, Insulin, BMI, Age.
+2. **Prediction**:
+   - The trained model predicts diabetes risk and displays the result.
+3. **Explanation**:
+   - View SHAP plots (Waterfall and Force) for detailed feature contributions.
+   - Explore permutation importance for global feature analysis.
+4. **Model Performance**:
+   - Metrics such as Accuracy, F1 Score, and ROC AUC are displayed.
 
-```
-Diabetes-Prediction/
-├── app.py               # Main application file
-├── requirements.txt     # Dependencies list
-├── loader.py            # load data
-├── function.py          # Function base
-```
+### Key Files and Modules
+- **`main.py`**: Orchestrates the Streamlit app.
+- **`training.py`**: Trains the model and saves it.
+- **`loader.py`**: Loads dataset, model, and performance metrics.
+- **`input.py`**: Collects user inputs via the sidebar.
+- **`predict.py`**: Handles predictions and visualization.
+- **`explainer.py`**: Displays SHAP-based explanations.
+- **`perm_importance.py`**: Visualizes permutation importance.
+- **`performance.py`**: Renders performance metrics.
+- **`about.py`**: Displays information about diabetes.
+- **`diabetes.csv`**: Dataset file.
 
-## Forking the Repository
+---
 
-If you wish to contribute to this project, you can fork the repository and create a pull request with your changes. Here are the steps to fork the repository:
+## Explanation Methods
 
-1. Go to the [repository page](https://github.com/UznetDev/Diabetes-Prediction).
-2. Click the "Fork" button at the top right of the page.
-3. Clone your forked repository:
+1. **SHAP Waterfall Plot**:
+   - Shows how each feature contributes positively or negatively to the prediction.
+2. **SHAP Force Plot**:
+   - Interactive visualization of feature contributions to individual predictions.
+3. **Permutation Importance**:
+   - Ranks features by their impact on the model's predictions.
 
-    ```bash
-    git clone https://github.com/your-username/Diabetes-Prediction.git
-    ```
+---
 
-4. Create a new branch for your changes:
+## Model Performance
 
-    ```bash
-    git checkout -b feature-branch
-    ```
+Performance metrics calculated:
+- **Accuracy**: Percentage of correct predictions.
+- **Precision**: Ratio of true positives to total positive predictions.
+- **Recall**: Ratio of true positives to total actual positives.
+- **F1 Score**: Harmonic mean of Precision and Recall.
+- **ROC AUC**: Area under the ROC curve.
 
-5. Make your changes and commit them:
+Metrics are displayed as donut charts in the application.
 
-    ```bash
-    git commit -m "Description of your changes"
-    ```
+---
 
-6. Push your changes to your forked repository:
+## Project Motivation
 
-    ```bash
-    git push origin feature-branch
-    ```
+This project was developed to:
+- Build knowledge in machine learning, especially in healthcare.
+- Gain hands-on experience with model interpretability techniques like SHAP.
+- Deploy an AI solution using **Streamlit**.
 
-7. Create a pull request from your forked repository to the original repository.
-
-## Usage
-
-Once the application is up and running, you can use it to make predictions by entering the required medical attributes through the web interface.
+---
 
 ## Contributing
 
-Contributions are welcome! Please follow these steps:
-
+Contributions are welcome! Follow these steps:
 1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Make your changes.
+2. Create a new feature branch:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes and push:
+   ```bash
+   git commit -m "Feature description"
+   git push origin feature-name
+   ```
 4. Submit a pull request.
+
+---
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-
-## <i>Contact</i>
-
-If you have any questions or suggestions, please contact:
-- Email: uznetdev@example.com
-- GitHub Issues: [Issues section](https://github.com/UznetDev/TikMe_UzBot/issues)
-- GitHub Profile: [UznetDev](https://github.com/UznetDev/)
-- Telegram: [UZNet_Dev](https://t.me/UZNet_Dev)
-- Linkedin: [Abdurahmon Niyozaliev](https://www.linkedin.com/in/abdurakhmon-niyozaliyev-%F0%9F%87%B5%F0%9F%87%B8-66545222a/)
-
-
-### <i>Thank you for your interest in the project!</i>
+This project is licensed under the MIT License.
