@@ -86,9 +86,7 @@ The dataset contains the following details:
 You can learn more about the model in detail from 'notebooks/Model.ipynb'. The `RandomForestClassifier` model was chosen through experimentation and showed the best performance. The required hyperparameters were identified using the `optuna` optimizer. For the model to function, it needs `FeatureEngineering`, `WoEEncoding`, and `ColumnSelector` transformers, which are combined through a pipeline.
 
 ### **1. FeatureEngineering**
-- **What It Does**: Transforms raw data into a format suitable for machine learning. This includes scaling, encoding, creating new features, or handling missing data.
-- **How It Works**: Applies preprocessing techniques (e.g., standardization, encoding) to enhance feature quality.
-- **Why We Need It**: Improves model performance by making data easier to interpret for algorithms.
+Transforms raw data into a format suitable for machine learning. This includes scaling, encoding, creating new features, or handling missing data.
 
 ---
 
@@ -106,15 +104,12 @@ If a feature `X` has the following counts:
 - For `Target = 1` (Positive): `N1`
 - For `Target = 0` (Negative): `N0`
 
-
-Substitute these probabilities into the formula to compute the WoE value for the feature category.
-
 ---
 
 ### **3. ColumnSelector**
-- **What It Does**: Selects specific columns (e.g., numerical, categorical) from the dataset for targeted processing.
-- **How It Works**: Filters columns based on provided criteria (e.g., data type, column names).
-- **Why We Need It**: Enables flexible and modular preprocessing in machine learning pipelines.
+Selects specific columns 'Pregnancies', 'Glucose', 'BMI', 'PregnancyRatio',
+    'RiskScore', 'InsulinEfficiency', 'Glucose_BMI', 'BMI_Age',
+    'Glucose_woe', 'RiskScore_woe' after `FeatureEngineering`
 
 
 ## Features
