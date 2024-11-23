@@ -14,17 +14,19 @@ Check out the live application: [Diabetes Prediction App](https://diabetes-predi
 3. [Features](#features)
 4. [Installation](#installation)
 5. [How It Works](#how-it-works)
-6. [Explanation Methods](#explanation-methods)
-7. [Model Performance](#model-performance)
-8. [Project Motivation](#project-motivation)
-9. [Contributing](#contributing)
-10. [License](#license)
+6. [Project Structure](#project-structure)
+7. [Explanation Methods](#explanation-methods)
+8. [Model Performance](#model-performance)
+9. [Project Motivation](#project-motivation)
+10. [Contributing](#contributing)
+11. [License](#license)
 
 ---
 
 ## Overview
 
-The **Diabetes Prediction with AI** project leverages a machine learning model to predict diabetes risk. Built with **Streamlit**, the app explains predictions using SHAP and permutation importance while showcasing model performance metrics.
+The **Diabetes Prediction with AI** project leverages a machine learning model to predict diabetes risk. Built with **Streamlit**, the app explains predictions using SHAP and permutation importance while showcasing model performance metrics. This model has not been reviewed by medical professionals; it is developed solely for experimental and testing purposes.
+The model was developed based on the ROC AUC metric, while efforts were made to improve the Recall metric when selecting the threshold, as this decision was made due to the medical context.
 
 ### Why This Project?
 
@@ -38,13 +40,48 @@ Understanding diabetes risk through data-driven predictions can help identify po
 ## Dataset
 
 The dataset is sourced from the **National Institute of Diabetes and Digestive and Kidney Diseases**. It includes:
-- **Pregnancies**
-- **Glucose Levels**
-- **Insulin Levels**
-- **BMI (Body Mass Index)**
-- **Age**
-- **Outcome**: Indicates diabetes presence (1 = Diabetes, 0 = No Diabetes).
 
+The dataset contains the following details:
+
+### General Overview
+- **Number of rows:** 768
+- **Number of columns:** 9
+- **Column names and data types:**
+  - `Pregnancies` (int64)
+  - `Glucose` (int64)
+  - `BloodPressure` (int64)
+  - `SkinThickness` (int64)
+  - `Insulin` (int64)
+  - `BMI` (float64)
+  - `DiabetesPedigreeFunction` (float64)
+  - `Age` (int64)
+  - `Outcome` (int64): Binary outcome (0 or 1)
+
+### Sample Data (First 5 Rows)
+| Pregnancies | Glucose | BloodPressure | SkinThickness | Insulin |  BMI  | DiabetesPedigreeFunction | Age | Outcome |
+|-------------|---------|---------------|---------------|---------|-------|---------------------------|-----|---------|
+| 6           | 148     | 72            | 35            | 0       | 33.6  | 0.627                     | 50  | 1       |
+| 1           | 85      | 66            | 29            | 0       | 26.6  | 0.351                     | 31  | 0       |
+| 8           | 183     | 64            | 0             | 0       | 23.3  | 0.672                     | 32  | 1       |
+| 1           | 89      | 66            | 23            | 94      | 28.1  | 0.167                     | 21  | 0       |
+| 0           | 137     | 40            | 35            | 168     | 43.1  | 2.288                     | 33  | 1       |
+
+### Statistical Summary
+- **Pregnancies:** Mean = 3.85, Max = 17
+- **Glucose:** Mean = 120.89, Min = 0 (possible missing values)
+- **BloodPressure:** Mean = 69.11, Min = 0 (possible missing values)
+- **SkinThickness:** Mean = 20.54, Min = 0 (possible missing values)
+- **Insulin:** Mean = 79.80, Min = 0 (possible missing values)
+- **BMI:** Mean = 31.99, Min = 0 (possible missing values)
+- **DiabetesPedigreeFunction:** Mean = 0.47, Max = 2.42
+- **Age:** Mean = 33.24, Max = 81
+- **Outcome:** Proportion of `1` (positive diabetes) = 34.9%
+
+### Observations
+- Several columns have a minimum value of `0`, which may indicate missing data.
+- The dataset is related to predicting diabetes (`Outcome`).
+
+We use only `Pregnancies`, `Glucose`, `BMI`, `Insulin`, `Age` for prediction.
 ---
 
 ## Features
@@ -68,7 +105,7 @@ The dataset is sourced from the **National Institute of Diabetes and Digestive a
 ## Installation
 
 ### Prerequisites
-- Python 3.8 or above
+- Python 3.10 or above
 - Pip package manager
 
 ### Steps
@@ -104,17 +141,37 @@ The dataset is sourced from the **National Institute of Diabetes and Digestive a
 4. **Model Performance**:
    - Metrics such as Accuracy, F1 Score, and ROC AUC are displayed.
 
-### Key Files and Modules
-- **`main.py`**: Orchestrates the Streamlit app.
-- **`training.py`**: Trains the model and saves it.
-- **`loader.py`**: Loads dataset, model, and performance metrics.
-- **`input.py`**: Collects user inputs via the sidebar.
-- **`predict.py`**: Handles predictions and visualization.
-- **`explainer.py`**: Displays SHAP-based explanations.
-- **`perm_importance.py`**: Visualizes permutation importance.
-- **`performance.py`**: Renders performance metrics.
-- **`about.py`**: Displays information about diabetes.
-- **`diabetes.csv`**: Dataset file.
+
+# Project Structure
+```
+Diabetes-Prediction/
+├── README.md                 # Project documentation
+├── main.py                   # Entry point for the Streamlit app
+├── loader.py                 # Data loading and preprocessing
+├── training.py               # Script for training the model
+├── requirements.txt          # Project dependencies
+├── LICENSE                   # License file
+├── datasets/
+│   ├── diabetes.csv          # Dataset used for training and predictions
+├── models/
+│   ├── model.pkl             # Trained machine learning model
+├── images/
+│   ├── page_icon.jpeg        # Application page icon
+├── data/
+│   ├── config.py             # Configuration variables
+│   ├── base.py               # Static HTML/CSS content
+├── functions/
+│   ├── model.py              # Custom model implementation
+│   ├── function.py           # Utility functions
+└── app/                      # Application logic and components
+    ├── predict.py            # Prediction logic
+    ├── explainer.py          # SHAP-based explanations
+    ├── perm_importance.py    # Permutation importance analysis
+    ├── performance.py        # Visualization of model performance metrics
+    ├── input.py              # User input handling for predictions
+    ├── about.py              # Informational section on diabetes
+```
+
 
 ---
 
@@ -170,4 +227,17 @@ Contributions are welcome! Follow these steps:
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+
+## Contact
+
+If you have any questions or suggestions, please contact:
+- Email: uznetdev@gmail.com
+- GitHub Issues: [Issues section](https://github.com/UznetDev/Aiogram-Bot-Template/issues)
+- GitHub Profile: [UznetDev](https://github.com/UznetDev/)
+- Telegram: [UZNet_Dev](https://t.me/UZNet_Dev)
+- Linkedin: [Abdurakhmon Niyozaliev](https://www.linkedin.com/in/abdurakhmon-niyozaliyev-%F0%9F%87%B5%F0%9F%87%B8-66545222a/)
+
+
+### <i>Thank you for your interest in the project!</i>
