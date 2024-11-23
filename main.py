@@ -1,10 +1,11 @@
 from function.function import *
 import streamlit as st
+from loader import page_icon
 
 
 st.set_page_config(
-    page_title="Diabetes Prediction",
-    page_icon="🏂",
+    page_title="Diabetes Prediction with AI",
+    page_icon=page_icon,
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -36,5 +37,3 @@ app()
 # About
 from app.about import app
 app()
-
-st.warning('This project (model) was created for learning purposes; the model may make mistakes. Please trust only qualified experts.')

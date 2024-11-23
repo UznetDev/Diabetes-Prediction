@@ -1,5 +1,6 @@
 import pandas as pd
 import joblib
+from PIL import Image
 from data.config import thresholds
 
 
@@ -14,7 +15,7 @@ data = pd.read_csv('datasets/diabetes.csv')
 X = data[['Pregnancies', 'Glucose', 'Insulin', 'BMI', 'Age']]
 y = data['Outcome']
 
-
+page_icon = Image.open("image/page_icon.jpeg")
 
 model = joblib.load('model.pkl')
 

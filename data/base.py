@@ -104,3 +104,8 @@ about_diabets = """
 - **Medications**: Insulin therapy or oral diabetes medications.
 - **Monitoring**: Regularly checking blood glucose levels.
 """
+
+
+warn = """
+This project (model) was created for learning purposes, the model may make mistakes. Please trust only qualified experts.
+"""
