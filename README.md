@@ -106,14 +106,6 @@ If a feature `X` has the following counts:
 - For `Target = 1` (Positive): `N1`
 - For `Target = 0` (Negative): `N0`
 
-Then:
-\[
-P(\text{Feature} = X | \text{Target} = 1) = \frac{N_1}{\text{Total Positive Cases}}
-\]
-
-\[
-P(\text{Feature} = X | \text{Target} = 0) = \frac{N_0}{\text{Total Negative Cases}}
-\]
 
 Substitute these probabilities into the formula to compute the WoE value for the feature category.
 
