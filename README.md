@@ -93,12 +93,29 @@ You can learn more about the model in detail from 'notebooks/Model.ipynb'. The `
 ---
 
 ### **2. WoEEncoding (Weight of Evidence Encoding)**
-- **What It Does**: Encodes categorical variables into numerical values based on their relationship with the target variable in binary classification.
-- **How It Works**: Calculates Weight of Evidence (WoE) values for each category using:
-  \[
-  WoE = \ln\left(\frac{P(Feature|Positive)}{P(Feature|Negative)}\right)
-  \]
-- **Why We Need It**: Enhances interpretability and reduces the risk of overfitting for categorical features.
+
+The Weight of Evidence (WoE) for a category in a feature is calculated as:
+
+
+Where:
+- `P(Feature = X | Target = 1)`: Proportion of positive cases (`Target = 1`) for the category `X`.
+- `P(Feature = X | Target = 0)`: Proportion of negative cases (`Target = 0`) for the category `X`.
+
+### Example:
+If a feature `X` has the following counts:
+- For `Target = 1` (Positive): `N1`
+- For `Target = 0` (Negative): `N0`
+
+Then:
+\[
+P(\text{Feature} = X | \text{Target} = 1) = \frac{N_1}{\text{Total Positive Cases}}
+\]
+
+\[
+P(\text{Feature} = X | \text{Target} = 0) = \frac{N_0}{\text{Total Negative Cases}}
+\]
+
+Substitute these probabilities into the formula to compute the WoE value for the feature category.
 
 ---
 
