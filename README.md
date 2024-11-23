@@ -1,6 +1,6 @@
 # Diabetes Prediction with AI
 
-![Demo of the Application](images/diabets-prediction.gif)
+![Demo of the Application](images/app.gif)
 
 This project demonstrates a machine learning solution for predicting diabetes based on user-provided health data. The application uses **Streamlit** for an interactive web interface and advanced interpretability tools like SHAP and permutation importance to explain model predictions.
 
