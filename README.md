@@ -25,6 +25,7 @@ Check out the live application: [Diabetes Prediction App](https://diabetes-predi
 10. [Project Motivation](#project-motivation)
 11. [Contributing](#contributing)
 12. [License](#license)
+13. [Contact](#contact)
 
 ---
 
